@@ -1,9 +1,10 @@
-from HH_class import HeadHunter
+from write_employers import WriteEmployers
+from write_vacancies import WriteVacancies
 
 
 def main():
-    vac_responce = HeadHunter().get_vacancies_by_id()
-    print(vac_responce)
+    # WriteEmployers.write_employers()
+    WriteVacancies.write_vacancies()
 
 
 if __name__ == '__main__':

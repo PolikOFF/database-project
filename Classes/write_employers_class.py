@@ -1,10 +1,9 @@
-from write_class import WriteClass
-from HH_class import HeadHunter
+from Classes.write_for_DB_class import WriteClass
+from Classes.parsing_class import HeadHunter
 
 
 class WriteEmployers:
     """Класс для записи работодателей в БД таблицы employers."""
-
     @staticmethod
     def write_employers():
         vac_responce_1 = HeadHunter().get_vacancies_by_id_39305()

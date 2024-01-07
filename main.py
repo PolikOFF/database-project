@@ -1,9 +1,12 @@
 from Classes.write_employers_class import WriteEmployers
 from Classes.write_vacancies_class import WriteVacancies
 from Classes.DBManager import DBManager
+from src.DB_creation import db_refresh, create_tables
 
 
 def main():
+    db_refresh()
+    create_tables()
     # Запись данных в таблицы
     WriteEmployers.write_employers()
     WriteVacancies.write_vacancies()

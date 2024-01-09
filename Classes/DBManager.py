@@ -65,7 +65,8 @@ class DBManager:
         finally:
             conn.close()
 
-    def get_vacancies_with_higher_salary(self):
+    @staticmethod
+    def get_vacancies_with_higher_salary():
         """
         Получает список всех вакансий,
         у которых зарплата выше средней по всем вакансиям.

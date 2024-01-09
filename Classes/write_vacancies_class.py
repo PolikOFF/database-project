@@ -1,6 +1,6 @@
 from Classes.write_for_DB_class import WriteClass
 from Classes.parsing_class import HeadHunter
-from Classes.structuring_data import DataStructiring
+from Classes.structuring_data_class import DataStructiring
 
 
 class WriteVacancies:

@@ -36,12 +36,12 @@ class WriteClass:
                         cur.execute(
                             'insert into vacancies (vacancy_name, employer_id, employer_name, salary_from, salary_to, vacancy_url)'
                             'values (%s, %s, %s, %s, %s, %s)',
-                            (self.data[i]['name_vacancy'],
-                             self.data[i]['employer_id'],
-                             self.data[i]['employer_name'],
-                             self.data[i]['salary_from'],
-                             self.data[i]['salary_to'],
-                             self.data[i]['url'])
+                            (self.data['items'][i]['name'],
+                             self.data['items'][i]['id'],
+                             self.data['items'][i]['name'],
+                             self.data['items'][i]['salary']['from'],
+                             self.data['items'][i]['salary']['to'],
+                             self.data['items'][i]['url'])
                         )
         finally:
             conn.close()

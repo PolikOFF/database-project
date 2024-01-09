@@ -2,11 +2,11 @@ import psycopg2
 import os
 
 
-def db_refresh():
+def db_create():
     """
     Функция для пересоздания БД.
     Если база данных существует, она удаляется
-    и создается новая
+    и создается новая.
     """
     conn = psycopg2.connect(
             host='localhost',
@@ -17,14 +17,32 @@ def db_refresh():
     cur = conn.cursor()
     conn.autocommit = True
 
-    cur.execute('drop database if exists vacancies')
     cur.execute('create database vacancies')
 
     cur.close()
     conn.close()
 
 
+def refresh_tables():
+    """Функция для очистки таблицы, перед записью данных."""
+    conn = psycopg2.connect(
+            host='localhost',
+            user='postgres',
+            password=os.getenv('PSQL_KEY'),
+            database='postgres',
+    )
+    cur = conn.cursor()
+    conn.autocommit = True
+
+    cur.execute('truncate table vacancies restart identity')
+    cur.execute('truncate table employers restart identity')
+
+    cur.close()
+    conn.close()
+
+
 def create_tables():
+    """Функция для создания таблиц для БД employers."""
     try:
         with psycopg2.connect(
                 host='localhost',
@@ -42,7 +60,7 @@ def create_tables():
                     employer_name varchar(50),
                     salary_from int,
                     salary_to int,
-                    vacancy_url varchar(30)
+                    vacancy_url text
                 );
                 
                 create table employers

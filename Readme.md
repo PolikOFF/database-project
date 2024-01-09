@@ -22,13 +22,6 @@ create table vacancies
 	vacancy_url varchar(30)
 );
 
-create table employers
-(
-	employer_id serial primary key,
-	employer_name varchar(50),
-	vacancy_count int
-);
-
 Использовать пароль привязанный к переменной окружения. Так же дополнительно использовать в своем виртуальном окружении
 pyproject.toml для установки зависимостей к проекту. 
 В данном проекте используются дополнительные библиотеки requests = "^2.31.0", psycopg2 = "^2.9.9".

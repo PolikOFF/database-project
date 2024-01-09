@@ -1,7 +1,7 @@
-from Classes.write_employers_class import WriteEmployers
 from Classes.write_vacancies_class import WriteVacancies
 from src.DB_creation import db_create, create_tables, refresh_tables
 from Classes.data_received_from_the_user import UserDataSelection
+import psycopg2
 
 
 def game_with_user():
@@ -10,45 +10,29 @@ def game_with_user():
     
 Вам предложится несколько вариантов для получения информации по компаниям,
 а так же получения некоторой статистики.
-''')
 
+Заполняю таблицу данными по вакансиям компаний...\n''')
+    answer = 'да'
     # Reset DB
     try:
         db_create()
-    except Exception():
-        refresh_tables()
         create_tables()
-    # Выбор пользователя, что он хочет получать по компании и статистике.
-    UserDataSelection().selected_company()
-    UserDataSelection().selected_statistic()
+    except psycopg2.DatabaseError:
+        refresh_tables()
     # Запись полученных данных по API в БД
-    WriteEmployers.write_employers()
     WriteVacancies.write_vacancies()
-    # Запрос на продолжение работы
-    answer = input('Желаете получить еще данных?\nДа/Нет')
-    while answer.lower() != ['Да', 'Нет']:
-        # Reset DB
-        try:
-            db_create()
-        except Exception():
-            refresh_tables()
-            create_tables()
-        if answer == 'да':
-            answer = input('''Какие данные вы хотели бы увидеть?
-        -----------------------------
-        1 - Начать с выбора компаний.
-        -----------------------------
-        2 - Получить еще данные по статистике.
-        -----------------------------\n''')
-            if answer == '1':
-                print('Получение данных...')
-                UserDataSelection().selected_company()
+    # Выбор пользователя, что он хочет получать по статистике.
+    UserDataSelection().selected_statistic()
+    while answer != 'нет':
+        # Запрос на продолжение работы
+        answer = input('Желаете продолжить?\nДа/Нет')
+        while answer.lower() != ['Да', 'Нет']:
+            if answer == 'да':
                 UserDataSelection().selected_statistic()
-            elif answer == '2':
-                print('Получение данных...')
-                UserDataSelection().selected_statistic()
-        elif answer == 'нет':
-            print('Спасибо за использование нашего сервиса! Возвращайтесь снова!')
-            quit()
-        else:
-            print('Выберите пожалуйста варианты ответа из списка')
+                break
+            elif answer == 'нет':
+                print('Спасибо за использование нашего сервиса! Возвращайтесь снова!')
+                quit()
+            else:
+                print('Выберите пожалуйста варианты ответа из списка')
+                break

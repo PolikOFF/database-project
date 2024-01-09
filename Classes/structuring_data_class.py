@@ -8,7 +8,7 @@ class DataStructiring:
         """Метод для отбора вакансий с указанной зарплатой и зарплатой в рублях"""
         vacancy_with_salary = []
         vacancy_dicts = []
-        for vacancy in range(len(self.data)):
+        for vacancy in range(0, 20):
             if (self.data['items'][vacancy]['salary'] is not None and
                     self.data['items'][vacancy]['salary']['currency'] == 'RUR'):
                 vacancy_with_salary.append([

@@ -19,7 +19,10 @@ class DBManager:
                 database='vacancies',
             ) as conn:
                 with conn.cursor() as cur:
-                    cur.execute('select employer_name, vacancy_count from employers')
+                    cur.execute('''
+                        select employer_name, count(*) from vacancies
+                        group by employer_name
+                        ''')
                     rows = cur.fetchall()
                     for row in rows:
                         print(row)
@@ -102,10 +105,12 @@ class DBManager:
                     database='vacancies',
             ) as conn:
                 with conn.cursor() as cur:
+                    coincidences = []
                     cur.execute(f"select vacancy_name, salary_to, vacancy_url from vacancies "
                                 f"where vacancy_name like '%{keyword}%'")
                     rows = cur.fetchall()
                     for row in rows:
-                        print(row)
+                        coincidences.append(row)
         finally:
             conn.close()
+        return coincidences

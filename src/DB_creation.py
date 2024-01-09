@@ -29,13 +29,12 @@ def refresh_tables():
             host='localhost',
             user='postgres',
             password=os.getenv('PSQL_KEY'),
-            database='postgres',
+            database='vacancies',
     )
     cur = conn.cursor()
     conn.autocommit = True
 
     cur.execute('truncate table vacancies restart identity')
-    cur.execute('truncate table employers restart identity')
 
     cur.close()
     conn.close()
@@ -61,13 +60,6 @@ def create_tables():
                     salary_from int,
                     salary_to int,
                     vacancy_url text
-                );
-                
-                create table employers
-                (
-                    employer_id serial primary key,
-                    employer_name varchar(50),
-                    vacancy_count int
                 );
                 ''')
     finally:
